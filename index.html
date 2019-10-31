@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+
+    <title>Zombie Hunter 9</title>
+
+</head>
+
+<body id='theBody' class='backgroundColor'>
+
+    <p id='zombieScore' class='centreOfTheEarth textFont scoreLocation'>Your Score: 0</p>
+    <p id='biggieSmalls' class='centreOfTheEarth textFont'>Zombie Hunter 9</p>  
+
+    <img id='childishZombino' class="centreImage" src='images/childishzombino.gif'>
+    <img id='childishZombino2' class="centreImage" src='images/childishzombino.gif'>
+    <img id='childishZombino3' class="centreImage" src='images/childishzombino.gif'>
+
+    <input type='button' id='resetButton' class='resetLocation' value='End'>
+
+    <audio id='audio'><source src='src/zombiehurt.mp3'></audio>
+    <audio id='tinyAudio'><source src='src/tinyzombiesound.mp3'></audio>
+    <audio id='backgroundMusic' loop><source src='src/spoopy.mp3'></audio>
+    
+    <script>
+        let score = 0;
+        let zombieInterval = 1100;
+        let dupeInterval = 1000;
+        let tinyInterval = 300;
+
+        // this function houses all the functions that have to do with onclick events
+        function zombieHandler() { 
+            playAudio();
+            playMusic();
+            displayScore();
+            zombiePos();
+            zombieExplode(); 
+        }
+
+        // this function handles all the functions to do with onclick events for the second zombie
+        function zombieDupeHandler() {
+            playAudioDupe();
+            playMusic();
+            displayScore();
+            zombieDupePos();
+            zombieDupeExplosion();
+        }
+
+        function tinyZombieHandler() {
+            playAudioTiny();
+            playMusic();
+            tinyZombieExplosion();
+            displayScorePlus();
+            tinyZombiePos();
+        }
+
+        // changes score based for two larger zombies
+        function displayScore() {
+            score ++;
+            document.getElementById('zombieScore').innerHTML = 'Your Score: ' + score;
+            if(score > 99) {
+                document.getElementById('biggieSmalls').innerHTML = "You area AN winner!!";
+                setTimeout("reset()", 10000);
+            }
+        }
+
+        // changes score by 5 for the smaller zombie
+        function displayScorePlus() {
+            score = score + 10;
+            document.getElementById('zombieScore').innerHTML = 'Your Score: ' + score;
+            if(score > 99) {
+                document.getElementById('biggieSmalls').innerHTML = "You area AN winner!!";
+                setTimeout("reset()", 10000);
+            }
+        }
+
+        // this function is used with setinterval() to change the zombie position to a random x, y coordinate within the window.
+        // function also runs on click to switch positions
+        function zombiePos() {
+            let width = window.innerWidth;
+            let height = window.innerHeight;
+            let randomLeft = Math.floor(Math.random() * (width - 150));
+            let randomTop = Math.floor(Math.random() * (height - 150));
+            zombieImage = document.getElementById('childishZombino');
+            zombieImage.style.left = randomLeft + 'px';
+            zombieImage.style.top = randomTop + 'px';
+        }
+
+        function zombieDupePos(){
+            let width = window.innerWidth;
+            let height = window.innerHeight;
+            let randomLeft = Math.floor(Math.random() * (width - 150));
+            let randomTop = Math.floor(Math.random() * (height - 150));
+            zombieImage2 = document.getElementById('childishZombino2');
+            zombieImage2.style.left = randomLeft + 'px';
+            zombieImage2.style.top = randomTop + 'px';
+        }
+
+        function tinyZombiePos() {
+            let width = window.innerWidth;
+            let height = window.innerHeight;
+            let randomLeft = Math.floor(Math.random() * (width - 50));
+            let randomTop = Math.floor(Math.random() * (height - 50));
+            zombieImage = document.getElementById('childishZombino3');
+            zombieImage.style.left = randomLeft + 'px';
+            zombieImage.style.top = randomTop + 'px';
+        }
+
+        // This function resets the game score and zombie position.
+        function reset() { 
+            document.getElementById('zombieScore').innerHTML = 'Your Score: 0';
+            document.getElementById('childishZombino').className = 'centreImage'; 
+            document.getElementById('childishZombino').style.top = '50%';
+            document.getElementById('childishZombino').style.left = '50%';
+            document.getElementById('childishZombino').style.position = 'absolute';
+            document.getElementById('childishZombino2').className = 'centreImage'; 
+            document.getElementById('childishZombino2').style.top = '50%';
+            document.getElementById('childishZombino2').style.left = '50%';
+            document.getElementById('childishZombino2').style.position = 'absolute';
+            document.getElementById('childishZombino3').style.top = '50%';
+            document.getElementById('childishZombino3').style.left = '50%';
+            document.getElementById('childishZombino3').style.position = 'absolute';
+            document.getElementById('biggieSmalls').innerHTML = "Zombie Hunter 9";
+            score = 0; 
+        }
+
+        // makes it explode and calls the changeBack function
+        function zombieExplode() {
+            document.getElementById('childishZombino').src = 'images/explode.gif';
+            setTimeout('changeBack()', 600);
+        }
+
+        function zombieDupeExplosion() {
+            document.getElementById('childishZombino2').src = 'images/explode.gif';
+            setTimeout('changeDupeBack()', 600);
+        }
+
+        function tinyZombieExplosion() {
+            document.getElementById('childishZombino3').src = 'images/tinyexplosion.gif'
+            setTimeout('changeTinyBack()', 600);
+        }
+
+        // changes the explosion back to a zombie
+        function changeBack() {
+            document.getElementById('childishZombino').src = 'images/childishzombino.gif';
+        }
+
+        function changeDupeBack() {
+            document.getElementById('childishZombino2').src = 'images/childishzombino.gif'
+        }
+
+        function changeTinyBack() {
+            document.getElementById('childishZombino3').src = 'images/childishzombino.gif'
+        }
+
+        // plays a sound
+        function playMusic() {
+            let backgroundSong = document.getElementById('backgroundMusic');
+            backgroundSong.play();
+        }
+
+        function playAudio() {
+            let zombieSound = document.getElementById('audio');
+            zombieSound.play();
+        }
+
+        function playAudioDupe() {
+            let zombieSound = document.getElementById('audio');
+            zombieSound.play();
+        }
+
+        function playAudioTiny() {
+            let zombieSound = document.getElementById('tinyAudio');
+            zombieSound.play();
+        }
+
+        // this function changes the size of the zombie images
+        function zombieSize() {
+            document.getElementById('childishZombino').style.width = '150px'
+            document.getElementById('childishZombino').style.height = '150px'
+            document.getElementById('childishZombino2').style.width = '150px'
+            document.getElementById('childishZombino2').style.height = '150px'
+            document.getElementById('childishZombino3').style.width = '50px'
+            document.getElementById('childishZombino3').style.height = '50px'
+        }
+
+        // runs the function that handles all onclick events
+        document.getElementById('theBody').onclick = playMusic;
+        document.getElementById('childishZombino').onclick = zombieHandler; 
+        document.getElementById('childishZombino2').onclick = zombieDupeHandler;
+        document.getElementById('childishZombino3').onclick = tinyZombieHandler;
+        document.getElementById('resetButton').onclick = reset;
+
+        // moves the zombies around on an interval
+        setInterval("zombiePos()", zombieInterval);
+        setInterval("zombieDupePos()", dupeInterval);
+        setInterval("tinyZombiePos()", tinyInterval);
+
+        // calls the function that changes the zombie sizes
+        zombieSize();
+    </script>
+</body>
+</html>
