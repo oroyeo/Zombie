@@ -22,10 +22,6 @@ p.scoreLocation {
     top: 95%;
     left: 50%;
 }
-div.imagePos {
-    height: 90vh;
-    width: 90vh;
-}
 .backgroundColor {
     background-color: black;
 }
