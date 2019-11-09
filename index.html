@@ -50,7 +50,7 @@
             score ++;
             document.getElementById('zombieScore').innerHTML = 'Your Score: ' + score;
             }
-            if(score > 5) {
+            if(score > 24) {
                 clickStatus = false;
                 document.getElementById('enlarge').innerHTML = "You are a winner!!";
                 stopInterval();
@@ -122,7 +122,7 @@
 
         // changes zombie back
         function changeBack() {
-            zombie.src = 'images/childishZombino.gif'
+            zombie.src = 'images/childishzombino.gif'
         }
         
         // resets the interval
