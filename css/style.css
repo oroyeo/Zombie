@@ -1,14 +1,14 @@
-p.centreOfTheEarth {
+p.makeCenter {
     text-align: center;
 }
-p#biggieSmalls {
+p#enlarge {
     font-size: 50px;
 }
 p.textFont {
     font-family: monospace;
     color:white;
 }
-.centreImage {
+.centerImage {
     position: absolute;
     top: 50%;
     left: 50;
@@ -24,4 +24,12 @@ p.scoreLocation {
 }
 .backgroundColor {
     background-color: black;
+}
+.hidden {
+    display:none;
+}
+body {
+    background-image: url('../images/night.png');
+    background-size: cover;
+
 }
